@@ -41,7 +41,7 @@ except (ImportError, Exception) as e:
 print("init completed")
 
 # web application
-
+import asyncio
 from microdot import Microdot, send_file
 from connectivity import conn_app
 
@@ -56,5 +56,9 @@ main_app = create_app()
 async def index(request):
     return send_file('static/index.html')
 
-main_app.run(port=80, debug=True)
 
+#main_app.run(port=80, debug=True)
+async def run_server():
+    main_app.run(port=80, debug=True)
+    
+asyncio.create_task(run_server())
