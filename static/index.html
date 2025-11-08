@@ -209,7 +209,7 @@ footer {
             type: "POST",
             method: 'POST',
             enctype: 'multipart/form-data',
-            url: "http://localhost:5000/paint",
+            url: "https://picotbrush.azurewebsites.net/paint",
             data: data,
             processData: false,
             contentType: false,
@@ -244,7 +244,7 @@ footer {
             type: "POST",
             method: 'POST',
             enctype: 'multipart/form-data',
-            url: "http://localhost:5000/convert",
+            url: "https://picotbrush.azurewebsites.net/convert",
             data: data,
             processData: false,
             contentType: false,
@@ -270,25 +270,22 @@ footer {
 
     function upload(blob) {
         const filename = "image.bin";
-        $.ajax( {
-          url:'/upload/image',
-          method: 'POST',
-          type: "POST",
-          data: blob,
-          processData: false,
-          contentType: false,
-          headers: {
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': `attachment; filename="${filename}"`,
-          },
-        success: function(data) {
-          console.log('Upload accepted', data);
-          }
+        $.ajax({
+            url: '/upload/image',
+            method: 'POST',
+            type: "POST",
+            data: blob,
+            processData: false,
+            contentType: false,
+            headers: {
+                'Content-Type': 'application/octet-stream',
+                'Content-Disposition': `attachment; filename="${filename}"`,
+            },
+            success: function(data) {
+                console.log('Upload accepted', data);
+            }
         });
-      }
-
-
-    
+    }
     </script>
 </body>
 
