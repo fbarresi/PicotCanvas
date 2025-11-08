@@ -1,15 +1,305 @@
 <!doctype html>
+
+<head>
+    <title>Picot Canvas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/favicon.ico">
+    <style>
+        .file-upload {
+  background-color: #ffffff;
+  /*width: 600px;*/
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-upload-wrap {
+  margin-top: 20px;
+  border: 2px dashed #1FB264;
+  position: relative;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #1fb26499;
+  border: 2px dashed #ffffff;
+}
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #15824B;
+  padding: 60px 0;
+}
+
+.file-upload-image {
+  max-height: 200px;
+  max-width: 200px;
+  margin: auto;
+  padding: 20px;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+    </style>
+</head>
 <html>
-  <head>
-    <title>Microdot Multipart Form-Data Example</title>
-    <meta charset="UTF-8">
-  </head>
-  <body>
-    <h1>Connect to wifi</h1>
-    <form method="POST" action="wlan/connect" enctype="application/x-www-form-urlencoded">
-      <p>SSID: <input type="text" name="ssid" required /></p>
-      <p>Password: <input type="text" name="password" required /></p>
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
+
+<body class="min-vh-100 vstack">
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand p-4" href="#">
+                <img src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" width="30" height="30" class="d-inline-block align-top mx-2" alt="">
+                <span class="fs-4">Picot Canvas</span>
+            </a>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="wlan" class="nav-link px-2 link-dark">Network</a></li>
+        <li><a href="https://github.com/fbarresi/PicotCanvas" class="nav-link px-2 link-dark"><i class="bi bi-github"></i></a></li>
+      </ul>
+        </nav>
+    </header>
+    <main class="flex-grow-1">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="px-4 py-3 my-2 text-center">
+                    <img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" alt="Logo" width="192" height="192" />
+                    <h1 class="display-6 fw-bold text-primary">Picot Canvas</h1>
+                </div>
+                <div class="row">
+                    <form>
+                        <div class="px-2 py-2 my-1">
+                            <p class="d-inline-flex gap-1">
+                                <a class="btn btn-primary btm-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    settings
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body" style="width: 18rem;">
+                                    <label for="name" class="form-label">Rotate</label>
+                                    <div class="d-grid gap-2 d-sm-flex">
+                                        <input type="range" min="0" max="3" value="0" class="slider" name="rotation" id="rotation">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-upload p-2 my-1 d-grid">
+                            <button class="btn btn-success btn-lg" type="button" onclick="$('.file-upload-input').trigger( 'click' )">upload image</button>
+                            <div class="image-upload-wrap">
+                                <input class="file-upload-input" type='file' id="file" name="file" onchange="readURL(this);" accept="image/jpeg, image/png" required />
+                                <div class="drag-text">
+                                    <h3>Drag and drop a file here</h3>
+                                </div>
+                            </div>
+                            <div class="file-upload-content">
+                                <img class="file-upload-image" src="#" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload()" class="btn btn-outline-danger">Remove <span class="image-title">Uploaded Image</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button onclick="draw()" class="btn btn-primary" type="button">redraw</button>
+                    </div>
+                </div>
+                <div class="row collapse" id=results>
+                    <div class="col p-4">
+                        <img id="imageContainer" class="img-fluid" style="border: 2px dashed #000000;" alt="resulting image">
+                    </div>
+                    <div class="d-grid gap-2 p-4">
+                        <button id="update-canvas" onclick="getBinary()" class="btn btn-success btn-lg" type="button">update canvas</button>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <div class="row"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="text-center text-lg-start bg-body-tertiary text-muted mt-5">
+        <div class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            © 2025 - Picot Canvas
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+            draw();
+
+
+        } else {
+            removeUpload();
+        }
+    }
+
+    function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+        $('#results').hide();
+    }
+
+    $('.image-upload-wrap').bind('dragover', function() {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function() {
+        $('.image-upload-wrap').removeClass('image-dropping');
+    });
+
+
+    function draw() {
+        //var data = $('form').serialize();
+        var data = new FormData(jQuery('form')[0]);
+        $.ajax({
+            type: "POST",
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            url: "http://localhost:5000/paint",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            xhrFields: {
+                responseType: 'blob' // treat the response as binary
+            },
+
+            success: function(blob) {
+
+                const imageUrl = URL.createObjectURL(blob);
+                $('#imageContainer').attr('src', imageUrl);
+                $('#results').show();
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
+            },
+            error: function(e) {
+
+                //$("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                //$("#btnSubmit").prop("disabled", false);
+
+            }
+        });
+    }
+
+    function getBinary() {
+        //var data = $('form').serialize();
+        var data = new FormData(jQuery('form')[0]);
+        $.ajax({
+            type: "POST",
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            url: "http://localhost:5000/convert",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            xhrFields: {
+                responseType: 'blob' // treat the response as binary
+            },
+
+            success: function(blob) {
+
+                const binUrl = URL.createObjectURL(blob);
+                console.log("SUCCESS : ", binUrl);
+
+
+            },
+            error: function(e) {
+                console.log("ERROR : ", e);
+            }
+        });
+    }
+
+
+    $(document).ready(function() {
+        $("#paint2").click(function() {
+            //var data = $('form').serialize();
+            var data = new FormData(jQuery('form')[0]);
+            $.ajax({
+                type: "POST",
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                url: "http://localhost:5000/paint",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                xhrFields: {
+                    responseType: 'blob' // treat the response as binary
+                },
+
+                success: function(blob) {
+
+                    const imageUrl = URL.createObjectURL(blob);
+                    //$("#result").text(data);
+                    //console.log("SUCCESS : ", data);
+                    //$('body').append('<img src="data:image/jpeg;base64, ' + base64Encode(data) + '" />');
+                    $('#imageContainer').attr('src', imageUrl);
+                    //$("#btnSubmit").prop("disabled", false);
+
+                },
+                error: function(e) {
+
+                    //$("#result").text(e.responseText);
+                    console.log("ERROR : ", e);
+                    //$("#btnSubmit").prop("disabled", false);
+
+                }
+            });
+        });
+    });
+    </script>
+</body>
+
 </html>
