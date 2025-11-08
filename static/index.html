@@ -78,24 +78,20 @@ footer {
 <body class="min-vh-100 vstack">
     <header>
         <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand p-4" href="#">
-                <img src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" width="30" height="30" class="d-inline-block align-top mx-2" alt="">
+            <a class="navbar-brand p-4" href="/">
+                <img src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" width="50" height="50" class="d-inline-block align-top mx-2" alt="">
                 <span class="fs-4">Picot Canvas</span>
             </a>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="wlan" class="nav-link px-2 link-dark">Network</a></li>
-        <li><a href="https://github.com/fbarresi/PicotCanvas" class="nav-link px-2 link-dark"><i class="bi bi-github"></i></a></li>
-      </ul>
+                <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="wlan/" class="nav-link px-2 link-dark">Network</a></li>
+                <li></li>
+            </ul>
         </nav>
     </header>
     <main class="flex-grow-1">
         <div class="container">
             <div class="container-fluid">
-                <div class="px-4 py-3 my-2 text-center">
-                    <img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" alt="Logo" width="192" height="192" />
-                    <h1 class="display-6 fw-bold text-primary">Picot Canvas</h1>
-                </div>
                 <div class="row">
                     <form>
                         <div class="px-2 py-2 my-1">
@@ -106,7 +102,7 @@ footer {
                             </p>
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body" style="width: 18rem;">
-                                    <label for="name" class="form-label">Rotate</label>
+                                    <label for="rotation" class="form-label">Rotate <output for="rotation" id="rotationValue" aria-hidden="true"></output></label>
                                     <div class="d-grid gap-2 d-sm-flex">
                                         <input type="range" min="0" max="3" value="0" class="slider" name="rotation" id="rotation">
                                     </div>
@@ -149,13 +145,24 @@ footer {
         </div>
     </main>
     <footer class="text-center text-lg-start bg-body-tertiary text-muted mt-5">
-        <div class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            © 2025 - Picot Canvas
+        <div class="d-flex p-4 border-bottom">
+            © 2025 - <a href="https://github.com/fbarresi/PicotCanvas" class="px-2"><i class="bi bi-github"></i> Picot Canvas</a>
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
+    // This is an example script, please modify as needed
+    const rangeInput = document.getElementById('rotation');
+    const rangeOutput = document.getElementById('rotationValue');
+
+    // Set initial value
+    rangeOutput.textContent = rangeInput.value;
+
+    rangeInput.addEventListener('input', function() {
+        rangeOutput.textContent = this.value;
+    });
+
     function readURL(input) {
         if (input.files && input.files[0]) {
 
@@ -249,6 +256,7 @@ footer {
 
             success: function(blob) {
 
+                upload(blob)
                 const binUrl = URL.createObjectURL(blob);
                 console.log("SUCCESS : ", binUrl);
 
@@ -260,45 +268,27 @@ footer {
         });
     }
 
-
-    $(document).ready(function() {
-        $("#paint2").click(function() {
-            //var data = $('form').serialize();
-            var data = new FormData(jQuery('form')[0]);
-            $.ajax({
-                type: "POST",
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                url: "http://localhost:5000/paint",
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-                timeout: 600000,
-                xhrFields: {
-                    responseType: 'blob' // treat the response as binary
-                },
-
-                success: function(blob) {
-
-                    const imageUrl = URL.createObjectURL(blob);
-                    //$("#result").text(data);
-                    //console.log("SUCCESS : ", data);
-                    //$('body').append('<img src="data:image/jpeg;base64, ' + base64Encode(data) + '" />');
-                    $('#imageContainer').attr('src', imageUrl);
-                    //$("#btnSubmit").prop("disabled", false);
-
-                },
-                error: function(e) {
-
-                    //$("#result").text(e.responseText);
-                    console.log("ERROR : ", e);
-                    //$("#btnSubmit").prop("disabled", false);
-
-                }
-            });
+    function upload(blob) {
+        const filename = "image.bin";
+        $.ajax( {
+          url:'/upload/image',
+          method: 'POST',
+          type: "POST",
+          data: blob,
+          processData: false,
+          contentType: false,
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': `attachment; filename="${filename}"`,
+          },
+        success: function(data) {
+          console.log('Upload accepted', data);
+          }
         });
-    });
+      }
+
+
+    
     </script>
 </body>
 

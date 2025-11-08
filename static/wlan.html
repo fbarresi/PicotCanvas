@@ -1,15 +1,60 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Microdot Multipart Form-Data Example</title>
+
+<head>
     <meta charset="UTF-8">
-  </head>
-  <body>
-    <h1>Connect to wifi</h1>
-    <form method="POST" action="connect" enctype="application/x-www-form-urlencoded">
-      <p>SSID: <input type="text" name="ssid" required /></p>
-      <p>Password: <input type="text" name="password" required /></p>
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
+    <title>Picot Canvas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/favicon.ico">
+</head>
+
+<body class="min-vh-100 vstack">
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand p-4" href="#">
+                <img src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" width="50" height="50" class="d-inline-block align-top mx-2" alt="">
+                <span class="fs-4">Picot Canvas</span>
+            </a>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Network</a></li>
+                <li></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="flex-grow-1">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="card" style="width: 38rem;">
+                        <div class="card-body">
+                            <h3 class="card-title">Connect to wifi</h3>
+                            <form method="POST" action="connect" enctype="application/x-www-form-urlencoded" class="card-text">
+                                <div class="form-group">
+                                    <label for="ssid">SSID</label>
+                                    <input type="email" class="form-control" id="ssid" name="ssid" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-success my-2">connect</button>
+                            </form>
+                        </div>
+                        <div>
+                        </div>
+                        <div class="row"></div>
+                    </div>
+                </div>
+    </main>
+    <footer class="text-center text-lg-start bg-body-tertiary text-muted mt-5">
+        <div class="d-flex p-4 border-bottom">
+            © 2025 - <a href="https://github.com/fbarresi/PicotCanvas" class="px-2"><i class="bi bi-github"></i> Picot Canvas</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+
 </html>
