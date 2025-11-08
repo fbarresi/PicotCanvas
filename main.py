@@ -18,8 +18,8 @@ try:
     wlan.active(True)
     print("Connecting to", ssid)
     wlan.connect(ssid, secrets['WIFI_PASSWORD'])
-    print("wait up to 20 seconds for connection...")
-    for x in range(20):
+    print("wait up to 60 seconds for connection...")
+    for x in range(60):
         if wlan.isconnected():
             break
         else:
@@ -40,6 +40,7 @@ except (ImportError, Exception) as e:
     ap.active(True)
     print(f"Listening on http://{network.hostname()}/")
 
+led.value(0)
 print("init completed")
 
 # web application
