@@ -6,6 +6,8 @@ import network
 import time
 import machine
 
+network.hostname("PicotCanvas")
+
 led = machine.Pin("LED", machine.Pin.OUT)
 led.value(0)
 
@@ -16,8 +18,8 @@ try:
     wlan.active(True)
     print("Connecting to", ssid)
     wlan.connect(ssid, secrets['WIFI_PASSWORD'])
-    print("wait up to 60 seconds for connection...")
-    for x in range(10):
+    print("wait up to 20 seconds for connection...")
+    for x in range(20):
         if wlan.isconnected():
             break
         else:
@@ -44,10 +46,12 @@ print("init completed")
 import asyncio
 from microdot import Microdot, send_file
 from connectivity import conn_app
+from upload import upload_app
 
 def create_app():
     app = Microdot()
     app.mount(conn_app, url_prefix='/wlan')
+    app.mount(upload_app, url_prefix='/upload')
     return app
 
 main_app = create_app()
@@ -57,8 +61,8 @@ async def index(request):
     return send_file('static/index.html')
 
 
-#main_app.run(port=80, debug=True)
-async def run_server():
-    main_app.run(port=80, debug=True)
+main_app.run(port=80, debug=True)
+#async def run_server():
+#    main_app.run(port=80, debug=True)
     
-asyncio.create_task(run_server())
+#asyncio.create_task(run_server())
