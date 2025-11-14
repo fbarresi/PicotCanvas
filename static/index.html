@@ -101,10 +101,25 @@ footer {
                                 </a>
                             </p>
                             <div class="collapse" id="collapseExample">
-                                <div class="card card-body" style="width: 18rem;">
-                                    <label for="rotation" class="form-label">Rotate <output for="rotation" id="rotationValue" aria-hidden="true"></output></label>
-                                    <div class="d-grid gap-2 d-sm-flex">
-                                        <input type="range" min="0" max="3" value="0" class="slider" name="rotation" id="rotation">
+                                <div class="card card-body">
+                                    <div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Rotate:</span>
+                                            <input type="number" min="0" max="270" step="90" value="0" data-bind="value:replyNumber" class="form-control" name="rotation" id="rotation"> <span class="input-group-text">deg</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Size:</span>
+                                            <input type="number" class="form-control" value="800" min="1" step="1" data-bind="value:replyNumber" aria-label="width" name="width" id="width">
+                                            <span class="input-group-text">x</span>
+                                            <input type="number" class="form-control" value="480" min="1" step="1" data-bind="value:replyNumber" aria-label="height" name="height" id="height">
+                                            <span class="input-group-text">px</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input" type="checkbox" id="preserveAspectRatio" name="preserveAspectRatio" checked>
+                                        <label class="form-check-label" for="checkDefault">Preserve aspect ratio</label>
                                     </div>
                                 </div>
                             </div>
