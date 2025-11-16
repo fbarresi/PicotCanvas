@@ -82,7 +82,7 @@ footer {
                 <img src="https://raw.githubusercontent.com/fbarresi/PicotBrushApi/refs/heads/main/static/images/paint_5015997.png" width="50" height="50" class="d-inline-block align-top mx-2" alt="">
                 <span class="fs-4">Picot Canvas</span>
             </a>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center m-md-4">
                 <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
                 <li><a href="wlan/" class="nav-link px-2 link-dark">Network</a></li>
                 <li></li>
@@ -141,7 +141,7 @@ footer {
                         </div>
                     </form>
                 </div>
-                <div class="row">
+                <div class="row collapse" id="redraw">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button onclick="draw()" class="btn btn-primary" type="button">redraw</button>
                     </div>
@@ -167,16 +167,6 @@ footer {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
-    // This is an example script, please modify as needed
-    const rangeInput = document.getElementById('rotation');
-    const rangeOutput = document.getElementById('rotationValue');
-
-    // Set initial value
-    rangeOutput.textContent = rangeInput.value;
-
-    rangeInput.addEventListener('input', function() {
-        rangeOutput.textContent = this.value;
-    });
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -207,6 +197,7 @@ footer {
         $('.file-upload-content').hide();
         $('.image-upload-wrap').show();
         $('#results').hide();
+        $('#redraw').hide();
     }
 
     $('.image-upload-wrap').bind('dragover', function() {
@@ -218,7 +209,7 @@ footer {
 
 
     function draw() {
-        //var data = $('form').serialize();
+        $('#redraw').show();
         var data = new FormData(jQuery('form')[0]);
         $.ajax({
             type: "POST",

@@ -16,6 +16,7 @@ try:
     ssid = secrets['WIFI_SSID']
     wlan = network.WLAN(network.WLAN.IF_STA)
     wlan.active(True)
+    wlan_scan = [name.decode('utf-8') for name, *args in wlan.scan()]
     print("Connecting to", ssid)
     wlan.connect(ssid, secrets['WIFI_PASSWORD'])
     print("wait up to 60 seconds for connection...")
@@ -43,11 +44,17 @@ except (ImportError, Exception) as e:
 led.value(0)
 print("init completed")
 
+def get_wlan_list(self):
+    return wlan_scan
+
 # web application
 import asyncio
 from microdot import Microdot, send_file
+setattr(Microdot, 'get_wlan_list', get_wlan_list)
+
 from connectivity import conn_app
 from upload import upload_app
+
 
 def create_app():
     app = Microdot()
