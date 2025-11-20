@@ -13,3 +13,8 @@ tribute to Jean-Claude Picot into an open source project based on rpi pico you a
 - visit [http://picotcanvas.local/wlan/](http://picotcanvas.local/wlan/) and connect to WiFi
 - reboot
 - visit [http://picotcanvas.local/](http://picotcanvas.local/) and configure your frame
+
+
+# Demo
+
+[here](./demo.html).

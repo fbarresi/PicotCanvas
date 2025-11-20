@@ -4,5 +4,5 @@ show_downloads: true
 google_analytics:
 theme: jekyll-theme-architect
 github:
-  zip_url: https://github.com/github/PicotCanvas/zipball/main
-  tar_url: https://github.com/github/PicotCanvas/tarball/main
+  zip_url: https://github.com/fbarresi/PicotCanvas/archive/refs/heads/main.zip
+  tar_url: https://github.com/fbarresi/PicotCanvas/archive/refs/heads/main.zip
