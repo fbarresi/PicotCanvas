@@ -10,3 +10,6 @@ tribute to Jean-Claude Picot into an open source project based on rpi pico you a
 - transfer everything into the pico storage
 - reboot
 - connect to the access point and let the board guide you through the initial configuration
+- visit [http://picotcanvas.local/wlan/](http://picotcanvas.local/wlan/) and connect to WiFi
+- reboot
+- visit [http://picotcanvas.local/](http://picotcanvas.local/) and configure your frame

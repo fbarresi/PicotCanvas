@@ -54,12 +54,14 @@ setattr(Microdot, 'get_wlan_list', get_wlan_list)
 
 from connectivity import conn_app
 from upload import upload_app
+from files import static_app
 
 
 def create_app():
     app = Microdot()
     app.mount(conn_app, url_prefix='/wlan')
     app.mount(upload_app, url_prefix='/upload')
+    app.mount(static_app, url_prefix='/static')
     return app
 
 main_app = create_app()
