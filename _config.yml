@@ -3,3 +3,6 @@ description: Picot Canvas is an open source driver for e-ink frames.
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-architect
+github:
+  zip_url: https://github.com/github/PicotCanvas/zipball/main
+  tar_url: https://github.com/github/PicotCanvas/tarball/main
