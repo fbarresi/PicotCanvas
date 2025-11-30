@@ -16,10 +16,11 @@ tribute to Jean-Claude Picot into an open source project based on rpi pico you a
 
 ### Step 1: Prepare the Pico
 
-Download the MicroPython UF2 file for Raspberry Pi Pico W from MicroPython [Downloads](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html).
-Plug in your Pico while holding the BOOTSEL button.
-The Pico will appear as a USB drive. Drag and drop the UF2 file onto it.
-The board will reboot into MicroPython mode.
+- Download the MicroPython UF2 file for Raspberry Pi Pico W from MicroPython [Downloads](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html).
+- Plug in your Pico while holding the BOOTSEL button.
+- The Pico will appear as a USB drive. 
+- Drag and drop the UF2 file onto it.
+- The board will reboot into MicroPython mode.
 
 ![install](./resources/Pico_install.gif)
 
@@ -70,7 +71,7 @@ The wiring should looks as follow:
 ### Step 5: First Boot & Access Point
 
 - Reboot the Pico.
-- It will create a Wi-Fi Access Point named something like PicotCanvas.
+- It will create a Wi-Fi Access Point named `RP2-AP`.
 - Connect your computer or phone to this AP.
 - Open a browser and visit: http://picotcanvas.local/wlan/
 - Enter your Wi-Fi credentials and save.
