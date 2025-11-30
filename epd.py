@@ -170,10 +170,14 @@ class EPD:
 
         self.turn_on_display()
         
-    def display_image(self, path="images/image.bin"):
+    def display_image(self, path="images/image.bin", chunk_size=512):
+        self.send_command(0x10)
+        
         with open(path, "rb") as f:
-            image_data = f.read()
-        self.display(image_data)
+            while image_data := f.read(chunk_size):
+                self.send_data2(image_data)
+
+        self.turn_on_display()
 
     def sleep(self):
         self.send_command(0x07) # DEEP_SLEEP

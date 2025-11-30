@@ -54,7 +54,7 @@ import epd
 screen = epd.EPD()
 
 # web application
-import gc
+import os
 import asyncio
 from microdot import Microdot, send_file
 setattr(Microdot, 'get_wlan_list', get_wlan_list)
@@ -79,6 +79,14 @@ async def index(request):
 
 @main_app.route('/clear')
 async def clear(request):
+    try:
+        os.remove("static/image-preview.jpg")
+    except OSError:
+        pass
+    try:
+        os.remove("images/image.bin")
+    except OSError:
+        pass
     screen.init()
     screen.clear()
     time.sleep(1)
@@ -87,7 +95,11 @@ async def clear(request):
 
 @main_app.route('/update')
 async def update(request):
-    gc.collect()
+    try:
+        with open("images/image.bin", "rb") as f:
+            pass
+    except OSError:
+        return "no image found"
     screen.init()
     screen.display_image()
     time.sleep(1)
