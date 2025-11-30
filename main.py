@@ -47,7 +47,14 @@ print("init completed")
 def get_wlan_list(self):
     return wlan_scan
 
+# e-paper display
+
+import epd
+
+screen = epd.EPD()
+
 # web application
+import os
 import asyncio
 from microdot import Microdot, send_file
 setattr(Microdot, 'get_wlan_list', get_wlan_list)
@@ -69,6 +76,35 @@ main_app = create_app()
 @main_app.route('/')
 async def index(request):
     return send_file('static/index.html')
+
+@main_app.route('/clear')
+async def clear(request):
+    try:
+        os.remove("static/image-preview.jpg")
+    except OSError:
+        pass
+    try:
+        os.remove("images/image.bin")
+    except OSError:
+        pass
+    screen.init()
+    screen.clear()
+    time.sleep(1)
+    screen.sleep()
+    return "display cleared"
+
+@main_app.route('/update')
+async def update(request):
+    try:
+        with open("images/image.bin", "rb") as f:
+            pass
+    except OSError:
+        return "no image found"
+    screen.init()
+    screen.display_image()
+    time.sleep(1)
+    screen.sleep()
+    return "display updated"
 
 
 main_app.run(port=80, debug=True)
