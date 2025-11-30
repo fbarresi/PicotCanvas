@@ -33,7 +33,7 @@ The board will reboot into MicroPython mode.
 print("Hello from Pico!")
 ```
 (optional) You might want to disable the `interrupt on connect`. Just configure the interpreter on the bottom down com-port.
-![thonny](./resources/thonny_1.gif)
+![thonny](./resources/thonny_1.png)
 
 ### Step 3: Get PicotCanvas Code
 
