@@ -16,6 +16,7 @@ try:
     ssid = secrets['WIFI_SSID']
     wlan = network.WLAN(network.WLAN.IF_STA)
     wlan.active(True)
+    wlan.config(pm=network.WLAN.PM_PERFORMANCE)
     wlan_scan = [name.decode('utf-8') for name, *args in wlan.scan()]
     print("Connecting to", ssid)
     wlan.connect(ssid, secrets['WIFI_PASSWORD'])
@@ -56,6 +57,7 @@ screen = epd.EPD()
 # web application
 import os
 import asyncio
+import gc
 from microdot import Microdot, send_file
 setattr(Microdot, 'get_wlan_list', get_wlan_list)
 
@@ -107,8 +109,17 @@ async def update(request):
     return "display updated"
 
 
-main_app.run(port=80, debug=True)
-#async def run_server():
-#    main_app.run(port=80, debug=True)
+async def sleep():
+    while True:
+        machine.idle()
+        await asyncio.sleep(60)
+
+async def start():
+    bgtask = asyncio.create_task(sleep())
+    server = asyncio.create_task(main_app.start_server(port=80))
+    await asyncio.gather(server, bgtask)
+
+#main_app.run(port=80, debug=True)
+
+asyncio.run(start())
     
-#asyncio.create_task(run_server())
